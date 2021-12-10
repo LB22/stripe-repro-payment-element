@@ -1,33 +1,33 @@
-import { Elements, PaymentElement } from "@stripe/react-stripe-js";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { loadStripe } from "@stripe/stripe-js";
+import { Elements, PaymentElement } from "@stripe/react-stripe-js";
 
 export default function Home() {
-  const locale = "en";
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
   const clientSecret =
     "pi_3K5GlxBdFvXgNzqz0ur0hskT_secret_SKWp7IFLlsdL27Xdcbnk9WEZA";
-  const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
   // https://stripe.com/docs/stripe-js/appearance-api#rules
   const appearance = {
     theme: `${resolvedTheme === "dark" ? "night" : "stripe"}`,
-    labels: `${resolvedTheme === "dark" ? "floating" : ""}`,
-    variables: {},
-    rules: {},
+    labels: "floating",
   };
+
   // https://stripe.com/docs/js/elements_object/create
   // https://stripe.com/docs/stripe-js/appearance-api
   const options = {
-    locale: locale,
     clientSecret,
     appearance,
   };
 
   // https://stackoverflow.com/a/64694798/13765158
+  // Public Test Key
   const [stripePromise] = useState(() =>
-    loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+    loadStripe(
+      "pk_test_51HfivvBdFvXgNzqzRgyALfIw7diXwmUfx827a0JjUi07A9fqJXIvGJRrGPfjKeF7ja6EWmoqV3mgn5OTlgkDYguY005sEwaxNi"
+    )
   );
 
   useEffect(() => {
@@ -39,8 +39,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Checkout</h1>
-      <p>Powered by Stripe</p>
+      <h1>Payment Element Stripe</h1>
       <hr />
       <button onClick={() => setTheme("dark")}>Dark mode</button>
       <button onClick={() => setTheme("light")}>Light mode</button>
