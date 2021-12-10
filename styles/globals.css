@@ -14,3 +14,21 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root {
+  /* Your default theme */
+  --background: white;
+  --foreground: black;
+}
+
+/* Your dark theme */
+[data-theme="dark"] {
+  --background: black;
+  --foreground: white;
+}
+
+/* Your light theme */
+[data-theme="light"] {
+  --background: white;
+  --foreground: black;
+}
